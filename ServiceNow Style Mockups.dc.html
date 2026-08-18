@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/manikanth-nalam-design-system-22668687-f0a7-4efb-844d-0fafaca040d0/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/manikanth-nalam-design-system-22668687-f0a7-4efb-844d-0fafaca040d0/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/manikanth-nalam-design-system-22668687-f0a7-4efb-844d-0fafaca040d0/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/manikanth-nalam-design-system-22668687-f0a7-4efb-844d-0fafaca040d0/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/manikanth-nalam-design-system-22668687-f0a7-4efb-844d-0fafaca040d0/styles.css">
+  <script src="_ds/manikanth-nalam-design-system-22668687-f0a7-4efb-844d-0fafaca040d0/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:var(--surface-sunken);}
+    a{color:var(--link);} a:hover{color:var(--link-hover);}
+    *{box-sizing:border-box;}
+    ::-webkit-scrollbar{width:8px;height:8px;} ::-webkit-scrollbar-thumb{background:var(--slate-300);border-radius:4px;}
+  </style>
+</helmet>
+
+<div style="width:100%;height:100vh;display:flex;flex-direction:column;overflow:hidden;background:var(--surface-sunken);">
+
+  <!-- TOP BAR -->
+  <div style="height:56px;flex:none;background:var(--navy-900);display:flex;align-items:center;padding:0 20px;gap:24px;box-shadow:var(--shadow-navy);z-index:5;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="display:flex;align-items:flex-end;gap:2px;height:20px;">
+        <div style="width:4px;height:9px;background:var(--cyan-500);border-radius:1px;"></div>
+        <div style="width:4px;height:14px;background:var(--blue-400);border-radius:1px;"></div>
+        <div style="width:4px;height:20px;background:var(--blue-300);border-radius:1px;"></div>
+      </div>
+      <span style="font-weight:700;font-size:16px;color:#fff;letter-spacing:var(--tracking-tight);">Nova Workspace</span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);padding:4px;border-radius:var(--radius-md);">
+      <sc-for list="{{ moduleTabs }}" as="m" hint-placeholder-count="3">
+        <div onClick="{{ m.onClick }}" style="{{ m.tabStyle }}">{{ m.label }}</div>
+      </sc-for>
+    </div>
+
+    <div style="flex:1;display:flex;justify-content:center;">
+      <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.08);border-radius:var(--radius-sm);padding:8px 14px;width:360px;">
+        {{ searchIcon }}
+        <span style="color:rgba(255,255,255,0.5);font-size:13px;">Search cases, articles, assets…</span>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:16px;">
+      {{ bellIcon }}
+      <div style="width:30px;height:30px;border-radius:50%;background:var(--blue-500);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;">JD</div>
+    </div>
+  </div>
+
+  <div style="flex:1;display:flex;min-height:0;">
+
+    <!-- SIDEBAR -->
+    <div style="width:240px;flex:none;background:var(--surface-card);border-right:1px solid var(--border-subtle);padding:20px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:var(--tracking-caps);color:var(--fg-3);text-transform:uppercase;padding:0 10px 10px;">{{ moduleLabel }}</div>
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+        <div onClick="{{ item.onClick }}" style="{{ item.rowStyle }}">
+          {{ item.icon }}
+          <span>{{ item.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div style="flex:1;overflow-y:auto;padding:32px 40px;">
+
+      <!-- ===== EE: HOME ===== -->
+      <sc-if value="{{ isEEHome }}">
+        <div style="max-width:1100px;display:flex;flex-direction:column;gap:24px;">
+          <div>
+            <div style="font-size:24px;font-weight:700;color:var(--navy-900);letter-spacing:var(--tracking-tight);">Good morning, Jordan</div>
+            <div style="font-size:14px;color:var(--fg-2);margin-top:4px;">Here's what's happening across your workplace today.</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+            <sc-for list="{{ eeQuickLinks }}" as="q" hint-placeholder-count="4">
+              <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;">
+                <div style="width:36px;height:36px;border-radius:var(--radius-sm);background:var(--blue-050);display:flex;align-items:center;justify-content:center;color:var(--blue-600);">{{ q.icon }}</div>
+                <div style="font-size:14px;font-weight:600;color:var(--navy-900);">{{ q.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background:var(--navy-900);border-radius:var(--radius-lg);padding:20px 24px;color:#fff;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-navy);">
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--cyan-300);letter-spacing:var(--tracking-caps);text-transform:uppercase;margin-bottom:4px;">Announcement</div>
+              <div style="font-size:15px;font-weight:600;">Q3 benefits enrollment opens Monday, August 24</div>
+            </div>
+            <button style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.35);border-radius:var(--radius-sm);padding:10px 20px;font-size:14px;font-weight:600;font-family:var(--font-body);cursor:pointer;">Learn more</button>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:20px;">
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:20px;">
+              <div style="font-size:15px;font-weight:700;color:var(--navy-900);margin-bottom:14px;">My open requests</div>
+              <sc-for list="{{ eeMyRequests }}" as="r" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-subtle);">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;color:var(--navy-900);">{{ r.subject }}</div>
+                    <div style="font-size:12px;color:var(--fg-3);font-family:var(--font-mono);margin-top:2px;">{{ r.number }}</div>
+                  </div>
+                  <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,22px" tone="{{ r.tone }}">{{ r.status }}</x-import>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:20px;">
+              <div style="font-size:15px;font-weight:700;color:var(--navy-900);margin-bottom:14px;">Suggested articles</div>
+              <sc-for list="{{ eeSuggestedArticles }}" as="a" hint-placeholder-count="3">
+                <div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:13px;color:var(--link);font-weight:600;cursor:pointer;">{{ a.title }}</div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== EE: CASES LIST ===== -->
+      <sc-if value="{{ isEECases }}">
+        <div style="max-width:1100px;display:flex;flex-direction:column;gap:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:22px;font-weight:700;color:var(--navy-900);">My Cases</div>
+            <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="auto,40px" variant="primary">New request</x-import>
+          </div>
+          <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Tabs" hint-size="100%,44px" tabs="{{ caseTabs }}" active="{{ caseTabActive }}" onChange="{{ setCaseTab }}"></x-import>
+          <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <div style="display:grid;grid-template-columns:110px 1fr 140px 120px 120px;padding:12px 20px;background:var(--surface-sunken);font-size:12px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">
+              <div>Number</div><div>Subject</div><div>Category</div><div>Status</div><div>Updated</div>
+            </div>
+            <sc-for list="{{ eeCases }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="display:grid;grid-template-columns:110px 1fr 140px 120px 120px;padding:14px 20px;border-top:1px solid var(--border-subtle);align-items:center;font-size:13px;cursor:pointer;">
+                <div style="font-family:var(--font-mono);color:var(--fg-3);">{{ c.number }}</div>
+                <div style="font-weight:600;color:var(--navy-900);">{{ c.subject }}</div>
+                <div style="color:var(--fg-2);">{{ c.category }}</div>
+                <div><x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,22px" tone="{{ c.tone }}">{{ c.status }}</x-import></div>
+                <div style="color:var(--fg-3);">{{ c.updated }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== EE: CASE DETAIL ===== -->
+      <sc-if value="{{ isEECaseDetail }}">
+        <div style="max-width:1100px;display:grid;grid-template-columns:1fr 300px;gap:24px;">
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div>
+              <div style="font-size:12px;font-family:var(--font-mono);color:var(--fg-3);margin-bottom:4px;">{{ selectedCase.number }}</div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="font-size:20px;font-weight:700;color:var(--navy-900);">{{ selectedCase.subject }}</div>
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,22px" tone="{{ selectedCase.tone }}">{{ selectedCase.status }}</x-import>
+              </div>
+            </div>
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;display:flex;flex-direction:column;gap:16px;">
+              <div style="font-size:13px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">Activity</div>
+              <sc-for list="{{ caseActivity }}" as="act" hint-placeholder-count="3">
+                <div style="display:flex;gap:12px;">
+                  <div style="width:30px;height:30px;flex:none;border-radius:50%;background:var(--slate-100);color:var(--navy-900);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ act.initials }}</div>
+                  <div style="flex:1;background:var(--surface-sunken);border-radius:var(--radius-md);padding:12px 14px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                      <span style="font-size:13px;font-weight:600;color:var(--navy-900);">{{ act.name }}</span>
+                      <span style="font-size:11px;color:var(--fg-3);">{{ act.time }}</span>
+                    </div>
+                    <div style="font-size:13px;color:var(--fg-2);line-height:var(--lh-normal);">{{ act.text }}</div>
+                  </div>
+                </div>
+              </sc-for>
+              <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Input" hint-size="100%,64px" placeholder="Add a comment…"></x-import>
+              <div style="display:flex;gap:10px;">
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="auto,40px" variant="primary">Add comment</x-import>
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="auto,40px" variant="outline">Escalate</x-import>
+              </div>
+            </div>
+          </div>
+          <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;height:fit-content;display:flex;flex-direction:column;gap:14px;">
+            <div style="font-size:13px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">Details</div>
+            <sc-for list="{{ caseDetails }}" as="d" hint-placeholder-count="5">
+              <div>
+                <div style="font-size:11px;color:var(--fg-3);margin-bottom:2px;">{{ d.label }}</div>
+                <div style="font-size:13px;font-weight:600;color:var(--navy-900);">{{ d.value }}</div>
+              </div>
+            </sc-for>
+            <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="100%,40px" variant="secondary">Close case</x-import>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== EE: KNOWLEDGE BASE ===== -->
+      <sc-if value="{{ isEEKb }}">
+        <div style="max-width:900px;display:flex;flex-direction:column;gap:16px;">
+          <div style="font-size:12px;color:var(--fg-3);">Knowledge &gt; Hardware &gt; Laptops</div>
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">How to request a loaner laptop</div>
+          <div style="display:flex;gap:8px;">
+            <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Tag" hint-size="auto,26px">KB0031029</x-import>
+            <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Tag" hint-size="auto,26px">Updated Aug 3</x-import>
+          </div>
+          <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:28px;font-size:14px;line-height:var(--lh-relaxed);color:var(--fg-2);display:flex;flex-direction:column;gap:14px;">
+            <p style="margin:0;">If your primary device is being repaired or replaced, you can request a loaner laptop for up to 15 business days. Loaner requests are fulfilled by IT Asset Management from available stock at your site.</p>
+            <p style="margin:0;">Submit a loaner request from the Service Catalog under Hardware. Include your current asset tag and expected return date. Approval is automatic for standard configurations.</p>
+            <p style="margin:0;">Loaner devices are pre-imaged with the standard software bundle. Personal data does not carry over — back up any local files before your device is collected.</p>
+            <div style="display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--border-subtle);">
+              <span style="font-size:13px;color:var(--fg-2);">Was this article helpful?</span>
+              <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="auto,32px" variant="outline" size="sm">Yes</x-import>
+              <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="auto,32px" variant="outline" size="sm">No</x-import>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--navy-900);margin-bottom:10px;">Related articles</div>
+            <sc-for list="{{ relatedArticles }}" as="a" hint-placeholder-count="3">
+              <div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:13px;color:var(--link);font-weight:600;cursor:pointer;">{{ a.title }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== EE: VIRTUAL AGENT CHAT ===== -->
+      <sc-if value="{{ isEEChat }}">
+        <div style="max-width:520px;display:flex;flex-direction:column;height:100%;background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden;">
+          <div style="background:var(--navy-900);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:10px;">
+            {{ chatIcon }}
+            <div>
+              <div style="font-size:14px;font-weight:700;">Virtual Agent</div>
+              <div style="font-size:11px;color:var(--cyan-300);">Online</div>
+            </div>
+          </div>
+          <div style="flex:1;padding:20px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:320px;">
+            <sc-for list="{{ chatMessages }}" as="msg" hint-placeholder-count="2">
+              <div style="{{ msg.rowStyle }}">
+                <div style="{{ msg.bubbleStyle }}">{{ msg.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:12px 20px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border-subtle);">
+            <sc-for list="{{ chatQuickReplies }}" as="q" hint-placeholder-count="3">
+              <div onClick="{{ q.onClick }}" style="padding:6px 12px;border-radius:var(--radius-pill);border:1px solid var(--border-default);font-size:12px;font-weight:600;color:var(--navy-900);cursor:pointer;">{{ q.label }}</div>
+            </sc-for>
+          </div>
+          <div style="padding:14px 20px;border-top:1px solid var(--border-subtle);display:flex;gap:10px;">
+            <input value="{{ chatInput }}" onChange="{{ onChatInputChange }}" placeholder="Type a message…" style="flex:1;padding:10px 12px;font-size:14px;border-radius:var(--radius-sm);border:1px solid var(--border-default);outline:none;font-family:var(--font-body);"></input>
+            <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="auto,40px" variant="primary" onClick="{{ sendChat }}">Send</x-import>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== EE: HR SELF-SERVICE ===== -->
+      <sc-if value="{{ isEEHr }}">
+        <div style="max-width:1100px;display:flex;flex-direction:column;gap:24px;">
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">HR Self-Service</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+            <sc-for list="{{ leaveBalances }}" as="l" hint-placeholder-count="3">
+              <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;">
+                <div style="font-size:12px;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);margin-bottom:6px;">{{ l.label }}</div>
+                <div style="font-size:26px;font-weight:700;color:var(--navy-900);">{{ l.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:20px;">
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;">
+              <div style="padding:16px 20px;font-size:14px;font-weight:700;color:var(--navy-900);border-bottom:1px solid var(--border-subtle);">Payslips</div>
+              <sc-for list="{{ payslips }}" as="p" hint-placeholder-count="3">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border-subtle);font-size:13px;">
+                  <span style="font-weight:600;color:var(--navy-900);">{{ p.month }}</span>
+                  <span style="color:var(--fg-2);">Net {{ p.net }}</span>
+                  <span style="color:var(--link);font-weight:600;cursor:pointer;">Download</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:14px;font-weight:700;color:var(--navy-900);">Request time off</div>
+              <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Select" hint-size="100%,66px" label="Leave type" options="{{ leaveTypeOptions }}"></x-import>
+              <div style="display:flex;gap:10px;">
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Input" hint-size="100%,66px" label="Start date" type="date"></x-import>
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Input" hint-size="100%,66px" label="End date" type="date"></x-import>
+              </div>
+              <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="100%,40px" variant="primary">Submit request</x-import>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== CW: DASHBOARD ===== -->
+      <sc-if value="{{ isCWDashboard }}">
+        <div style="max-width:1200px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">Case Dashboard</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+            <sc-for list="{{ cwStats }}" as="s" hint-placeholder-count="4">
+              <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:18px;">
+                <div style="font-size:12px;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);margin-bottom:8px;">{{ s.label }}</div>
+                <div style="font-size:26px;font-weight:700;color:var(--navy-900);">{{ s.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Tabs" hint-size="100%,44px" tabs="{{ cwQueueTabs }}" active="{{ cwQueueTabActive }}" onChange="{{ setCwQueueTab }}"></x-import>
+          <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <div style="display:grid;grid-template-columns:100px 1fr 1fr 100px 120px 140px;padding:12px 20px;background:var(--surface-sunken);font-size:12px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">
+              <div>Case</div><div>Customer</div><div>Subject</div><div>Priority</div><div>Status</div><div>Agent</div>
+            </div>
+            <sc-for list="{{ cwCases }}" as="c" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:100px 1fr 1fr 100px 120px 140px;padding:14px 20px;border-top:1px solid var(--border-subtle);align-items:center;font-size:13px;">
+                <div style="font-family:var(--font-mono);color:var(--fg-3);">{{ c.number }}</div>
+                <div style="font-weight:600;color:var(--navy-900);">{{ c.customer }}</div>
+                <div style="color:var(--fg-2);">{{ c.subject }}</div>
+                <div><x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,22px" tone="{{ c.priorityTone }}">{{ c.priority }}</x-import></div>
+                <div style="color:var(--fg-2);">{{ c.status }}</div>
+                <div style="color:var(--fg-3);">{{ c.agent }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== CW: CUSTOMER PORTAL ===== -->
+      <sc-if value="{{ isCWPortal }}">
+        <div style="max-width:1000px;display:flex;flex-direction:column;gap:28px;">
+          <div style="background:var(--navy-900);border-radius:var(--radius-lg);padding:40px;text-align:center;color:#fff;box-shadow:var(--shadow-navy);">
+            <div style="font-size:24px;font-weight:700;margin-bottom:14px;">How can we help you today?</div>
+            <div style="max-width:480px;margin:0 auto;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.1);border-radius:var(--radius-sm);padding:12px 16px;">
+              {{ searchIconLight }}
+              <span style="color:rgba(255,255,255,0.55);font-size:13px;">Search help articles or start a case…</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+            <sc-for list="{{ cwCategories }}" as="cat" hint-placeholder-count="4">
+              <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;text-align:center;cursor:pointer;">
+                <div style="width:40px;height:40px;border-radius:50%;background:var(--blue-050);color:var(--blue-600);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">{{ cat.icon }}</div>
+                <div style="font-size:13px;font-weight:600;color:var(--navy-900);">{{ cat.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;">
+            <div style="font-size:14px;font-weight:700;color:var(--navy-900);margin-bottom:12px;">Recent cases</div>
+            <sc-for list="{{ cwRecentCases }}" as="r" hint-placeholder-count="2">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border-subtle);font-size:13px;">
+                <span style="font-weight:600;color:var(--navy-900);">{{ r.subject }}</span>
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,22px" tone="{{ r.tone }}">{{ r.status }}</x-import>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== CW: ORDER TRACKER ===== -->
+      <sc-if value="{{ isCWTracker }}">
+        <div style="max-width:900px;display:flex;flex-direction:column;gap:24px;">
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">Order #58211</div>
+          <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:28px;">
+            <div style="display:flex;align-items:center;">
+              <sc-for list="{{ trackerSteps }}" as="step" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;flex:1;">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                    <div style="{{ step.dotStyle }}">{{ step.check }}</div>
+                    <div style="{{ step.labelStyle }}">{{ step.label }}</div>
+                  </div>
+                  <div style="{{ step.lineStyle }}"></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;display:flex;flex-direction:column;gap:12px;">
+              <div style="font-size:13px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">Shipment details</div>
+              <div style="font-size:13px;color:var(--fg-2);">Carrier: <b style="color:var(--navy-900);">Parcel Express</b></div>
+              <div style="font-size:13px;color:var(--fg-2);">Tracking #: <b style="color:var(--navy-900);font-family:var(--font-mono);">PX882931004</b></div>
+              <div style="font-size:13px;color:var(--fg-2);">Estimated delivery: <b style="color:var(--navy-900);">Aug 20</b></div>
+            </div>
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;">
+              <div style="font-size:13px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);margin-bottom:10px;">Items</div>
+              <sc-for list="{{ orderItems }}" as="it" hint-placeholder-count="2">
+                <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:var(--fg-2);border-bottom:1px solid var(--border-subtle);">
+                  <span>{{ it.name }}</span><span>×{{ it.qty }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== CW: SLA / ESCALATIONS ===== -->
+      <sc-if value="{{ isCWSla }}">
+        <div style="max-width:1100px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">SLA &amp; Escalations</div>
+          <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <div style="display:grid;grid-template-columns:100px 1fr 1fr 140px 120px;padding:12px 20px;background:var(--surface-sunken);font-size:12px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">
+              <div>Case</div><div>Customer</div><div>SLA target</div><div>Time remaining</div><div></div>
+            </div>
+            <sc-for list="{{ slaCases }}" as="c" hint-placeholder-count="5">
+              <div style="display:grid;grid-template-columns:100px 1fr 1fr 140px 120px;padding:14px 20px;border-top:1px solid var(--border-subtle);align-items:center;font-size:13px;">
+                <div style="font-family:var(--font-mono);color:var(--fg-3);">{{ c.number }}</div>
+                <div style="font-weight:600;color:var(--navy-900);">{{ c.customer }}</div>
+                <div style="color:var(--fg-2);">{{ c.target }}</div>
+                <div><x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,22px" tone="{{ c.tone }}">{{ c.remaining }}</x-import></div>
+                <div style="color:var(--link);font-weight:600;cursor:pointer;">Escalate</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== CW: OMNICHANNEL INBOX ===== -->
+      <sc-if value="{{ isCWInbox }}">
+        <div style="max-width:1200px;height:100%;display:grid;grid-template-columns:280px 1fr 260px;gap:0;background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden;">
+          <div style="border-right:1px solid var(--border-subtle);overflow-y:auto;">
+            <sc-for list="{{ inboxConversations }}" as="conv" hint-placeholder-count="6">
+              <div onClick="{{ conv.onClick }}" style="{{ conv.rowStyle }}">
+                {{ conv.icon }}
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13px;font-weight:600;color:var(--navy-900);">{{ conv.name }}</div>
+                  <div style="font-size:12px;color:var(--fg-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ conv.preview }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;">
+            <sc-for list="{{ inboxThread }}" as="msg" hint-placeholder-count="3">
+              <div style="{{ msg.rowStyle }}"><div style="{{ msg.bubbleStyle }}">{{ msg.text }}</div></div>
+            </sc-for>
+          </div>
+          <div style="border-left:1px solid var(--border-subtle);padding:20px;display:flex;flex-direction:column;gap:14px;">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--blue-500);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px;">{{ selectedConversationInitials }}</div>
+            <div style="font-size:14px;font-weight:700;color:var(--navy-900);">{{ selectedConversationName }}</div>
+            <sc-for list="{{ inboxProfile }}" as="p" hint-placeholder-count="3">
+              <div>
+                <div style="font-size:11px;color:var(--fg-3);">{{ p.label }}</div>
+                <div style="font-size:13px;font-weight:600;color:var(--navy-900);">{{ p.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== ITX: SERVICE CATALOG ===== -->
+      <sc-if value="{{ isITXCatalog }}">
+        <div style="max-width:1200px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">Service Catalog</div>
+          <div style="display:flex;gap:8px;">
+            <sc-for list="{{ catalogCategories }}" as="cat" hint-placeholder-count="4">
+              <div style="{{ cat.pillStyle }}">{{ cat.label }}</div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+            <sc-for list="{{ catalogItems }}" as="item" hint-placeholder-count="6">
+              <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;display:flex;flex-direction:column;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:var(--radius-sm);background:var(--blue-050);color:var(--blue-600);display:flex;align-items:center;justify-content:center;">{{ item.icon }}</div>
+                <div>
+                  <div style="font-size:14px;font-weight:700;color:var(--navy-900);">{{ item.name }}</div>
+                  <div style="font-size:12px;color:var(--fg-2);margin-top:4px;">{{ item.desc }}</div>
+                </div>
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="100%,36px" variant="outline" size="sm">Request</x-import>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== ITX: INCIDENTS ===== -->
+      <sc-if value="{{ isITXIncidents }}">
+        <div style="max-width:1150px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">Incidents</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+            <sc-for list="{{ incidentStats }}" as="s" hint-placeholder-count="4">
+              <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:18px;">
+                <div style="font-size:12px;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);margin-bottom:8px;">{{ s.label }}</div>
+                <div style="font-size:26px;font-weight:700;{{ s.valueColor }}">{{ s.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <div style="display:grid;grid-template-columns:100px 1fr 110px 120px 160px;padding:12px 20px;background:var(--surface-sunken);font-size:12px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">
+              <div>Incident</div><div>Short description</div><div>Severity</div><div>State</div><div>Assigned group</div>
+            </div>
+            <sc-for list="{{ incidents }}" as="inc" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:100px 1fr 110px 120px 160px;padding:14px 20px;border-top:1px solid var(--border-subtle);align-items:center;font-size:13px;">
+                <div style="font-family:var(--font-mono);color:var(--fg-3);">{{ inc.number }}</div>
+                <div style="font-weight:600;color:var(--navy-900);">{{ inc.desc }}</div>
+                <div><x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,22px" tone="{{ inc.tone }}">{{ inc.severity }}</x-import></div>
+                <div style="color:var(--fg-2);">{{ inc.state }}</div>
+                <div style="color:var(--fg-3);">{{ inc.group }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== ITX: CHANGE MANAGEMENT ===== -->
+      <sc-if value="{{ isITXChanges }}">
+        <div style="max-width:1200px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">Change Management</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start;">
+            <sc-for list="{{ changeColumns }}" as="col" hint-placeholder-count="4">
+              <div style="background:var(--surface-sunken);border-radius:var(--radius-lg);padding:12px;display:flex;flex-direction:column;gap:10px;">
+                <div style="font-size:12px;font-weight:700;color:var(--fg-2);text-transform:uppercase;letter-spacing:var(--tracking-wide);padding:4px 4px 0;">{{ col.title }}</div>
+                <sc-for list="{{ col.items }}" as="ch" hint-placeholder-count="2">
+                  <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:12px;display:flex;flex-direction:column;gap:6px;">
+                    <div style="font-size:11px;font-family:var(--font-mono);color:var(--fg-3);">{{ ch.number }}</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--navy-900);">{{ ch.title }}</div>
+                    <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,20px" tone="{{ ch.tone }}">{{ ch.risk }}</x-import>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== ITX: CMDB / ASSETS ===== -->
+      <sc-if value="{{ isITXCmdb }}">
+        <div style="max-width:1150px;display:flex;flex-direction:column;gap:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:22px;font-weight:700;color:var(--navy-900);">CMDB / Asset Explorer</div>
+            <div style="width:280px;">
+              <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Input" hint-size="100%,42px" placeholder="Search assets…"></x-import>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:start;">
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;">
+              <div style="display:grid;grid-template-columns:120px 1fr 130px 140px 110px;padding:12px 20px;background:var(--surface-sunken);font-size:12px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">
+                <div>Asset tag</div><div>Name</div><div>Type</div><div>Owner</div><div>Status</div>
+              </div>
+              <sc-for list="{{ assets }}" as="a" hint-placeholder-count="6">
+                <div onClick="{{ a.onClick }}" style="{{ a.rowStyle }}">
+                  <div style="font-family:var(--font-mono);color:var(--fg-3);">{{ a.tag }}</div>
+                  <div style="font-weight:600;color:var(--navy-900);">{{ a.name }}</div>
+                  <div style="color:var(--fg-2);">{{ a.type }}</div>
+                  <div style="color:var(--fg-2);">{{ a.owner }}</div>
+                  <div><x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Badge" hint-size="auto,22px" tone="{{ a.tone }}">{{ a.status }}</x-import></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;display:flex;flex-direction:column;gap:12px;">
+              <div style="font-size:13px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:var(--tracking-wide);">Asset detail</div>
+              <sc-for list="{{ selectedAssetDetails }}" as="d" hint-placeholder-count="5">
+                <div>
+                  <div style="font-size:11px;color:var(--fg-3);margin-bottom:2px;">{{ d.label }}</div>
+                  <div style="font-size:13px;font-weight:600;color:var(--navy-900);">{{ d.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== ITX: APPROVALS ===== -->
+      <sc-if value="{{ isITXApprovals }}">
+        <div style="max-width:800px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:22px;font-weight:700;color:var(--navy-900);">Approvals</div>
+          <sc-if value="{{ noApprovalsLeft }}">
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:40px;text-align:center;color:var(--fg-3);font-size:14px;">All caught up — no pending approvals.</div>
+          </sc-if>
+          <sc-for list="{{ approvalsList }}" as="ap" hint-placeholder-count="5">
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--navy-900);">{{ ap.item }}</div>
+                <div style="font-size:12px;color:var(--fg-3);margin-top:4px;">Requested by {{ ap.requester }} · {{ ap.date }}</div>
+              </div>
+              <div style="display:flex;gap:8px;flex:none;">
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="auto,36px" variant="outline" size="sm" onClick="{{ ap.onReject }}">Reject</x-import>
+                <x-import component-from-global-scope="ManikanthNalamDesignSystem_226686.Button" hint-size="auto,36px" variant="primary" size="sm" onClick="{{ ap.onApprove }}">Approve</x-import>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+</helmet>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const NS = 'ManikanthNalamDesignSystem_226686';
+
+function icon(name, opts) {
+  opts = opts || {};
+  const size = opts.size || 18;
+  const color = opts.color || 'currentColor';
+  const P = {
+    home: 'M3 11l9-7 9 7M5 10v9h14v-9',
+    ticket: 'M4 7h16v4a2 2 0 000 4v4H4v-4a2 2 0 000-4V7z',
+    file: 'M6 2h9l5 5v15H6z M15 2v5h5',
+    book: 'M4 5a2 2 0 012-2h11v16H6a2 2 0 00-2 2V5z M17 3v16',
+    chat: 'M4 5h16v10H8l-4 3V5z',
+    users: 'M8 12a4 4 0 100-8 4 4 0 000 8zM2 20c0-3 3-5 6-5s6 2 6 5M16 8a3 3 0 110 6M22 20c0-2.5-2-4.3-4.5-4.9',
+    grid: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z',
+    activity: 'M3 12h4l2 7 4-14 2 7h6',
+    branch: 'M6 3v10a4 4 0 004 4h4M6 3a2 2 0 100 4 2 2 0 000-4zM18 15a2 2 0 100 4 2 2 0 000-4zM18 9a2 2 0 100-4 2 2 0 000 4z',
+    database: 'M12 5c4.4 0 8-1.1 8-2.5S16.4 0 12 0 4 1.1 4 2.5 7.6 5 12 5zM4 2.5V16c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5V2.5M4 9.3c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5',
+    check: 'M4 12l5 5L20 6',
+    headset: 'M4 13a8 8 0 0116 0v5a2 2 0 01-2 2h-2v-6h4M4 18v-5a2 2 0 012-2h2v6H6a2 2 0 01-2-2z',
+    store: 'M4 9l1-5h14l1 5M4 9v10h16V9M4 9a2 2 0 004 0 2 2 0 004 0 2 2 0 004 0 2 2 0 004 0',
+    truck: 'M3 7h11v9H3zM14 11h4l3 3v2h-7zM7 19a2 2 0 100-4 2 2 0 000 4zM18 19a2 2 0 100-4 2 2 0 000 4z',
+    clock: 'M12 8v5l3 2M20 12a8 8 0 11-16 0 8 8 0 0116 0z',
+    inbox: 'M4 4h16l2 8v6a2 2 0 01-2 2H4a2 2 0 01-2-2v-6l2-8zM2 12h6l2 3h4l2-3h6',
+    search: 'M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-4.3-4.3',
+    bell: 'M6 9a6 6 0 1112 0v5l2 3H4l2-3V9zM10 20a2 2 0 004 0',
+    laptop: 'M4 5h16v9H4zM2 18h20',
+    calendar: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',
+    alert: 'M12 3l10 18H2z M12 9v5 M12 17h.01',
+    mail: 'M3 5h18v14H3zM3 5l9 7 9-7',
+    phone: 'M5 3h4l2 5-2.5 1.5a12 12 0 006 6L16 13l5 2v4a2 2 0 01-2 2C9 21 3 15 3 5a2 2 0 012-2z',
+    package: 'M12 2l9 5v10l-9 5-9-5V7z M3 7l9 5 9-5 M12 12v9',
+    credit: 'M3 6h18v12H3zM3 10h18',
+    settings: 'M12 15a3 3 0 100-6 3 3 0 000 6zM19 12a7 7 0 00-.2-1.6l2-1.6-2-3.4-2.4 1a7 7 0 00-2.8-1.6L13.2 2h-4l-.4 2.8a7 7 0 00-2.8 1.6l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12',
+  };
+  return React.createElement('svg', {width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round'},
+    React.createElement('path', {d: P[name] || ''}));
+}
+
+const EE_CASES = [
+  {number:'REQ0010042', subject:'Laptop keyboard not working', category:'Hardware', status:'In Progress', tone:'warning', updated:'2h ago',
+    activity:[
+      {initials:'IT', name:'IT Support', time:'2h ago', text:'We\u2019ve ordered a replacement keyboard — it should arrive by Thursday.'},
+      {initials:'JD', name:'Jordan Diaz', time:'5h ago', text:'The K and L keys have stopped responding entirely.'},
+      {initials:'IT', name:'IT Support', time:'1d ago', text:'Thanks for the report — can you confirm the asset tag on the bottom of the laptop?'},
+    ],
+    details:[{label:'Assigned to',value:'IT Support — Hardware'},{label:'Category',value:'Hardware'},{label:'Priority',value:'Medium'},{label:'Opened',value:'Aug 15, 2026'},{label:'SLA due',value:'Aug 19, 2026'}]},
+  {number:'REQ0010039', subject:'Access to Finance shared drive', category:'Access', status:'Pending', tone:'neutral', updated:'1d ago',
+    activity:[
+      {initials:'JD', name:'Jordan Diaz', time:'1d ago', text:'Requesting read/write access to the Finance shared drive for the Q3 audit.'},
+      {initials:'AC', name:'Access Control', time:'22h ago', text:'Request routed to your manager for approval.'},
+    ],
+    details:[{label:'Assigned to',value:'Access Control Team'},{label:'Category',value:'Access'},{label:'Priority',value:'Low'},{label:'Opened',value:'Aug 16, 2026'},{label:'SLA due',value:'Aug 21, 2026'}]},
+  {number:'REQ0010021', subject:'New monitor request', category:'Hardware', status:'Resolved', tone:'success', updated:'3d ago',
+    activity:[
+      {initials:'IT', name:'IT Support', time:'3d ago', text:'Monitor delivered to your desk and set up. Closing this request.'},
+      {initials:'JD', name:'Jordan Diaz', time:'5d ago', text:'Requesting a second monitor for my desk.'},
+    ],
+    details:[{label:'Assigned to',value:'IT Support — Hardware'},{label:'Category',value:'Hardware'},{label:'Priority',value:'Low'},{label:'Opened',value:'Aug 10, 2026'},{label:'SLA due',value:'Aug 14, 2026'}]},
+  {number:'REQ0010018', subject:'Software install — Figma', category:'Software', status:'Resolved', tone:'success', updated:'4d ago',
+    activity:[
+      {initials:'IT', name:'IT Support', time:'4d ago', text:'Figma license assigned and installed remotely.'},
+    ],
+    details:[{label:'Assigned to',value:'IT Support — Software'},{label:'Category',value:'Software'},{label:'Priority',value:'Low'},{label:'Opened',value:'Aug 9, 2026'},{label:'SLA due',value:'Aug 12, 2026'}]},
+  {number:'REQ0010005', subject:'Building badge not working', category:'Facilities', status:'Open', tone:'brand', updated:'1w ago',
+    activity:[
+      {initials:'JD', name:'Jordan Diaz', time:'1w ago', text:'My badge stopped working at the west entrance this morning.'},
+      {initials:'FM', name:'Facilities', time:'6d ago', text:'We\u2019re reissuing your badge — please stop by the front desk.'},
+    ],
+    details:[{label:'Assigned to',value:'Facilities'},{label:'Category',value:'Facilities'},{label:'Priority',value:'Medium'},{label:'Opened',value:'Aug 3, 2026'},{label:'SLA due',value:'Aug 6, 2026'}]},
+  {number:'REQ0009991', subject:'Payroll direct deposit change', category:'HR', status:'Resolved', tone:'success', updated:'2w ago',
+    activity:[
+      {initials:'HR', name:'HR Team', time:'2w ago', text:'Direct deposit details updated for next pay cycle.'},
+    ],
+    details:[{label:'Assigned to',value:'HR Operations'},{label:'Category',value:'HR'},{label:'Priority',value:'Low'},{label:'Opened',value:'Jul 30, 2026'},{label:'SLA due',value:'Aug 4, 2026'}]},
+];
+
+const INBOX_CONVERSATIONS = [
+  {name:'Alex Morgan', initials:'AM', preview:'Can you check on my refund status?', iconKey:'chat', account:'Premium', customerSince:'2021', pastCases:'7',
+    thread:[{from:'them', text:'Hi, can you check on my refund status?'},{from:'me', text:'Of course — let me pull up your order.'},{from:'them', text:'Thank you, order #58211.'}]},
+  {name:'Nadia Kessler', initials:'NK', preview:'Attached photos of the damaged item', iconKey:'mail', account:'Standard', customerSince:'2023', pastCases:'2',
+    thread:[{from:'them', text:'The item arrived damaged — photos attached.'},{from:'me', text:'Sorry about that — I\u2019ll start a replacement right away.'}]},
+  {name:'Marcus Lee', initials:'ML', preview:'Still can\u2019t log into my account', iconKey:'phone', account:'Standard', customerSince:'2022', pastCases:'4',
+    thread:[{from:'them', text:'I still can\u2019t log into my account after the reset.'},{from:'me', text:'Let\u2019s try clearing your browser cache first.'}]},
+  {name:'Sofia Alvarez', initials:'SA', preview:'When will my order ship?', iconKey:'chat', account:'Premium', customerSince:'2020', pastCases:'11',
+    thread:[{from:'them', text:'When will my order ship?'},{from:'me', text:'It\u2019s scheduled to ship tomorrow morning.'}]},
+  {name:'Tom Becker', initials:'TB', preview:'Thanks for the quick refund!', iconKey:'mail', account:'Standard', customerSince:'2024', pastCases:'1',
+    thread:[{from:'them', text:'Thanks for the quick refund!'},{from:'me', text:'Happy to help — let us know if anything else comes up.'}]},
+  {name:'Grace Chen', initials:'GC', preview:'Does this work with my current setup?', iconKey:'chat', account:'Premium', customerSince:'2019', pastCases:'6',
+    thread:[{from:'them', text:'Does this product work with my current setup?'},{from:'me', text:'Yes — it\u2019s compatible with your current plan.'}]},
+];
+
+const ASSETS = [
+  {tag:'AST-10021', name:'MacBook Pro 16"', type:'Laptop', owner:'Jordan Diaz', status:'In Use', tone:'success', serial:'C02XF3ABMD6R', location:'HQ — 4th floor', purchased:'Mar 2025'},
+  {tag:'AST-10088', name:'Dell Precision 5570', type:'Laptop', owner:'Priya Nair', status:'In Use', tone:'success', serial:'DP5570-88213', location:'HQ — 2nd floor', purchased:'Jan 2024'},
+  {tag:'AST-10120', name:'Cisco ASR 9000', type:'Network', owner:'Platform Ops', status:'Active', tone:'success', serial:'CS-ASR-9000-4471', location:'Data Center A', purchased:'Jun 2022'},
+  {tag:'AST-10143', name:'iPhone 15', type:'Mobile', owner:'Sam Ortiz', status:'In Repair', tone:'warning', serial:'F2LX88QK0J', location:'Vendor — depot repair', purchased:'Sep 2023'},
+  {tag:'AST-10077', name:'Dell U2723QE Monitor', type:'Peripheral', owner:'Unassigned', status:'In Stock', tone:'neutral', serial:'DU2723-77102', location:'HQ — IT storage', purchased:'Nov 2023'},
+  {tag:'AST-09981', name:'ThinkPad X1 Carbon', type:'Laptop', owner:'Lena Fischer', status:'Retired', tone:'danger', serial:'TP-X1C-99814', location:'Pending disposal', purchased:'Feb 2021'},
+];
+
+const MODULES = {
+  ee: { label: 'Employee Experience', screens: [
+    {id:'home', label:'Home', icon:'home'},
+    {id:'cases', label:'My Cases', icon:'ticket'},
+    {id:'caseDetail', label:'Case Detail', icon:'file'},
+    {id:'kb', label:'Knowledge', icon:'book'},
+    {id:'chat', label:'Virtual Agent', icon:'chat'},
+    {id:'hr', label:'HR Self-Service', icon:'users'},
+  ]},
+  cw: { label: 'Customer Workflow', screens: [
+    {id:'dashboard', label:'Case Dashboard', icon:'headset'},
+    {id:'portal', label:'Customer Portal', icon:'store'},
+    {id:'tracker', label:'Order Tracker', icon:'truck'},
+    {id:'sla', label:'SLA & Escalations', icon:'clock'},
+    {id:'inbox', label:'Omnichannel Inbox', icon:'inbox'},
+  ]},
+  itx: { label: 'ITX Service Management', screens: [
+    {id:'catalog', label:'Service Catalog', icon:'grid'},
+    {id:'incidents', label:'Incidents', icon:'activity'},
+    {id:'changes', label:'Change Management', icon:'branch'},
+    {id:'cmdb', label:'CMDB / Assets', icon:'database'},
+    {id:'approvals', label:'Approvals', icon:'check'},
+  ]},
+};
+
+class Component extends DCLogic {
+  state = {
+    activeModule: 'ee',
+    activeScreen: 'home',
+    caseTabActive: 'All',
+    cwQueueTabActive: 'My cases',
+    chatInput: '',
+    chatMessages: [
+      {from:'bot', text:"Hi! I'm the virtual agent. How can I help today?"},
+    ],
+    approvals: [
+      {id:1, item:'Software license — Figma seat', requester:'Priya Nair', date:'Aug 15'},
+      {id:2, item:'Laptop upgrade request', requester:'Sam Ortiz', date:'Aug 14'},
+      {id:3, item:'VPN access — Finance VLAN', requester:'Wei Zhang', date:'Aug 13'},
+      {id:4, item:'Desk booking — 3rd floor', requester:'Lena Fischer', date:'Aug 12'},
+      {id:5, item:'Budget increase — Marketing tools', requester:'Diego Ruiz', date:'Aug 11'},
+    ],
+    selectedAsset: 0,
+    selectedCaseNumber: 'REQ0010042',
+    selectedConversation: 0,
+  };
+
+  setModule = (id) => this.setState({ activeModule: id, activeScreen: MODULES[id].screens[0].id });
+  setScreen = (id) => this.setState({ activeScreen: id });
+  setCaseTab = (t) => this.setState({ caseTabActive: t });
+  setCwQueueTab = (t) => this.setState({ cwQueueTabActive: t });
+  onChatInputChange = (e) => this.setState({ chatInput: e.target.value });
+  selectAsset = (i) => this.setState({ selectedAsset: i });
+  openCase = (number) => this.setState({ selectedCaseNumber: number, activeScreen: 'caseDetail' });
+  selectConversation = (i) => this.setState({ selectedConversation: i });
+
+  sendChat = () => {
+    const text = this.state.chatInput.trim();
+    if (!text) return;
+    const reply = 'Got it — let me check that for you. One moment…';
+    this.setState((s) => ({
+      chatMessages: [...s.chatMessages, {from:'user', text}, {from:'bot', text: reply}],
+      chatInput: '',
+    }));
+  };
+  quickReply = (label) => {
+    this.setState((s) => ({
+      chatMessages: [...s.chatMessages, {from:'user', text: label}, {from:'bot', text: 'Here is what I found — you can also open a case if you need a human agent.'}],
+    }));
+  };
+  approveItem = (id) => this.setState((s) => ({ approvals: s.approvals.filter(a => a.id !== id) }));
+
+  renderVals() {
+    const s = this.state;
+    const mod = MODULES[s.activeModule];
+
+    const moduleTabs = Object.keys(MODULES).map((id) => ({
+      label: MODULES[id].label,
+      onClick: () => this.setModule(id),
+      tabStyle: {
+        padding: '7px 14px', borderRadius: 'var(--radius-sm)', fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+        color: s.activeModule === id ? 'var(--navy-900)' : 'rgba(255,255,255,0.7)',
+        background: s.activeModule === id ? '#fff' : 'transparent',
+      },
+    }));
+
+    const navItems = mod.screens.map((sc) => {
+      const active = sc.id === s.activeScreen;
+      return {
+        label: sc.label,
+        onClick: () => this.setScreen(sc.id),
+        icon: icon(sc.icon, {size:18, color: active ? 'var(--brand-primary)' : 'var(--fg-3)'}),
+        rowStyle: {
+          display:'flex', alignItems:'center', gap:'10px', padding:'9px 10px', borderRadius:'var(--radius-sm)',
+          fontSize:'13px', fontWeight:600, cursor:'pointer',
+          color: active ? 'var(--navy-900)' : 'var(--fg-2)',
+          background: active ? 'var(--blue-050)' : 'transparent',
+        },
+      };
+    });
+
+    const key = s.activeModule + '_' + s.activeScreen;
+
+    const bubbleStyle = (mine) => ({
+      maxWidth:'78%', padding:'10px 14px', borderRadius:'var(--radius-md)', fontSize:'13px', lineHeight:'var(--lh-normal)',
+      background: mine ? 'var(--brand-primary)' : 'var(--surface-sunken)', color: mine ? '#fff' : 'var(--fg-1)',
+    });
+    const rowStyle = (mine) => ({ display:'flex', justifyContent: mine ? 'flex-end' : 'flex-start' });
+
+    return {
+      moduleTabs, navItems,
+      moduleLabel: mod.label,
+      searchIcon: icon('search', {size:16, color:'rgba(255,255,255,0.6)'}),
+      searchIconLight: icon('search', {size:16, color:'rgba(255,255,255,0.6)'}),
+      bellIcon: icon('bell', {size:18, color:'#fff'}),
+      chatIcon: icon('chat', {size:20, color:'#fff'}),
+
+      isEEHome: key === 'ee_home',
+      isEECases: key === 'ee_cases',
+      isEECaseDetail: key === 'ee_caseDetail',
+      isEEKb: key === 'ee_kb',
+      isEEChat: key === 'ee_chat',
+      isEEHr: key === 'ee_hr',
+      isCWDashboard: key === 'cw_dashboard',
+      isCWPortal: key === 'cw_portal',
+      isCWTracker: key === 'cw_tracker',
+      isCWSla: key === 'cw_sla',
+      isCWInbox: key === 'cw_inbox',
+      isITXCatalog: key === 'itx_catalog',
+      isITXIncidents: key === 'itx_incidents',
+      isITXChanges: key === 'itx_changes',
+      isITXCmdb: key === 'itx_cmdb',
+      isITXApprovals: key === 'itx_approvals',
+
+      eeQuickLinks: [
+        {label:'Submit IT request', icon: icon('laptop',{size:18,color:'var(--blue-600)'})},
+        {label:'HR self-service', icon: icon('users',{size:18,color:'var(--blue-600)'})},
+        {label:'Book a room', icon: icon('calendar',{size:18,color:'var(--blue-600)'})},
+        {label:'Report an issue', icon: icon('alert',{size:18,color:'var(--blue-600)'})},
+      ],
+      eeMyRequests: [
+        {number:'REQ0010042', subject:'Laptop keyboard not working', status:'In Progress', tone:'warning'},
+        {number:'REQ0010039', subject:'Access to Finance shared drive', status:'Pending Approval', tone:'neutral'},
+        {number:'REQ0010021', subject:'New monitor request', status:'Resolved', tone:'success'},
+      ],
+      eeSuggestedArticles: [
+        {title:'Setting up VPN on a new device'},
+        {title:'How to reset your password'},
+        {title:'Booking a desk at the downtown office'},
+      ],
+
+      caseTabs: ['All','Open','Resolved'],
+      caseTabActive: s.caseTabActive,
+      setCaseTab: this.setCaseTab,
+      eeCases: EE_CASES.map(c => ({ ...c, onClick: () => this.openCase(c.number) })),
+
+      selectedCase: (() => { const c = EE_CASES.find(x => x.number === s.selectedCaseNumber) || EE_CASES[0]; return c; })(),
+      caseActivity: (EE_CASES.find(x => x.number === s.selectedCaseNumber) || EE_CASES[0]).activity,
+      caseDetails: (EE_CASES.find(x => x.number === s.selectedCaseNumber) || EE_CASES[0]).details,
+
+      relatedArticles: [
+        {title:'Laptop repair vs. replacement policy'},
+        {title:'Returning a loaner device'},
+        {title:'Contacting IT Asset Management'},
+      ],
+
+      chatMessages: s.chatMessages.map(m => ({ text: m.text, rowStyle: rowStyle(m.from==='user'), bubbleStyle: bubbleStyle(m.from==='user') })),
+      chatInput: s.chatInput,
+      onChatInputChange: this.onChatInputChange,
+      sendChat: this.sendChat,
+      chatQuickReplies: [
+        {label:'Reset my password', onClick: () => this.quickReply('Reset my password')},
+        {label:'Check ticket status', onClick: () => this.quickReply('Check ticket status')},
+        {label:'Talk to an agent', onClick: () => this.quickReply('Talk to an agent')},
+      ],
+
+      leaveBalances: [
+        {label:'Vacation', value:'12 days'},
+        {label:'Sick', value:'5 days'},
+        {label:'Personal', value:'2 days'},
+      ],
+      payslips: [
+        {month:'July 2026', net:'$4,210'},
+        {month:'June 2026', net:'$4,210'},
+        {month:'May 2026', net:'$4,180'},
+      ],
+      leaveTypeOptions: ['Vacation','Sick','Personal','Unpaid'],
+
+      cwStats: [
+        {label:'Open cases', value:'128'},
+        {label:'Avg. resolution', value:'4.2h'},
+        {label:'SLA compliance', value:'96%'},
+        {label:'CSAT', value:'4.6 / 5'},
+      ],
+      cwQueueTabs: ['My cases','Team','Unassigned'],
+      cwQueueTabActive: s.cwQueueTabActive,
+      setCwQueueTab: this.setCwQueueTab,
+      cwCases: [
+        {number:'CS-8821', customer:'Alex Morgan', subject:'Billing discrepancy on invoice #4471', priority:'High', priorityTone:'danger', status:'Open', agent:'R. Patel'},
+        {number:'CS-8819', customer:'Nadia Kessler', subject:'Return request — item damaged', priority:'Medium', priorityTone:'warning', status:'In Progress', agent:'J. Kim'},
+        {number:'CS-8814', customer:'Marcus Lee', subject:'Account access locked', priority:'High', priorityTone:'danger', status:'Open', agent:'Unassigned'},
+        {number:'CS-8802', customer:'Sofia Alvarez', subject:'Order delayed beyond estimate', priority:'Medium', priorityTone:'warning', status:'In Progress', agent:'R. Patel'},
+        {number:'CS-8791', customer:'Tom Becker', subject:'Refund status inquiry', priority:'Low', priorityTone:'neutral', status:'Resolved', agent:'J. Kim'},
+        {number:'CS-8785', customer:'Grace Chen', subject:'Product question — compatibility', priority:'Low', priorityTone:'neutral', status:'Resolved', agent:'M. Osei'},
+      ],
+
+      cwCategories: [
+        {label:'Billing', icon: icon('credit',{size:18,color:'var(--blue-600)'})},
+        {label:'Technical support', icon: icon('settings',{size:18,color:'var(--blue-600)'})},
+        {label:'Account', icon: icon('users',{size:18,color:'var(--blue-600)'})},
+        {label:'Returns', icon: icon('package',{size:18,color:'var(--blue-600)'})},
+      ],
+      cwRecentCases: [
+        {subject:'Billing discrepancy on invoice #4471', status:'Open', tone:'brand'},
+        {subject:'Return request — item damaged', status:'In Progress', tone:'warning'},
+      ],
+
+      trackerSteps: (() => {
+        const steps = ['Placed','Processing','Shipped','Delivered'];
+        const activeIdx = 2;
+        return steps.map((label, i) => ({
+          label, check: i <= activeIdx ? icon('check',{size:14,color:'#fff'}) : '',
+          dotStyle: {
+            width:'28px', height:'28px', borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center',
+            background: i <= activeIdx ? 'var(--brand-primary)' : 'var(--slate-200)', color: i<=activeIdx ? '#fff' : 'var(--fg-3)',
+            fontSize:'12px', fontWeight:700,
+          },
+          labelStyle: { fontSize:'12px', fontWeight:600, color: i <= activeIdx ? 'var(--navy-900)' : 'var(--fg-3)' },
+          lineStyle: i < steps.length - 1 ? { flex:1, height:'2px', background: i < activeIdx ? 'var(--brand-primary)' : 'var(--slate-200)', margin:'0 8px' } : { display:'none' },
+        }));
+      })(),
+      orderItems: [
+        {name:'Wireless keyboard', qty:1},
+        {name:'USB-C dock', qty:2},
+      ],
+
+      slaCases: [
+        {number:'CS-8814', customer:'Marcus Lee', target:'4h response', remaining:'12 min left', tone:'danger'},
+        {number:'CS-8821', customer:'Alex Morgan', target:'8h resolution', remaining:'45 min left', tone:'danger'},
+        {number:'CS-8802', customer:'Sofia Alvarez', target:'24h resolution', remaining:'3h left', tone:'warning'},
+        {number:'CS-8819', customer:'Nadia Kessler', target:'8h resolution', remaining:'5h left', tone:'warning'},
+        {number:'CS-8785', customer:'Grace Chen', target:'24h resolution', remaining:'18h left', tone:'success'},
+      ],
+
+      inboxConversations: INBOX_CONVERSATIONS.map((c,i) => ({
+        name:c.name, preview:c.preview, icon: icon(c.iconKey,{size:16,color:'var(--fg-3)'}), onClick:()=>this.selectConversation(i),
+        rowStyle:{display:'flex',gap:'10px',padding:'14px 16px',borderBottom:'1px solid var(--border-subtle)',background: s.selectedConversation===i?'var(--blue-050)':'transparent',cursor:'pointer'},
+      })),
+      inboxThread: INBOX_CONVERSATIONS[s.selectedConversation].thread.map(m => ({ text: m.text, rowStyle: rowStyle(m.from==='me'), bubbleStyle: bubbleStyle(m.from==='me') })),
+      selectedConversationInitials: INBOX_CONVERSATIONS[s.selectedConversation].initials,
+      selectedConversationName: INBOX_CONVERSATIONS[s.selectedConversation].name,
+      inboxProfile: [
+        {label:'Account', value: INBOX_CONVERSATIONS[s.selectedConversation].account},
+        {label:'Customer since', value: INBOX_CONVERSATIONS[s.selectedConversation].customerSince},
+        {label:'Past cases', value: INBOX_CONVERSATIONS[s.selectedConversation].pastCases},
+      ],
+
+      catalogCategories: ['All','Hardware','Software','Access','Facilities'].map((label,i) => ({
+        label, pillStyle: { padding:'7px 14px', borderRadius:'var(--radius-pill)', fontSize:'13px', fontWeight:600, cursor:'pointer',
+          background: i===0 ? 'var(--navy-900)' : 'var(--surface-card)', color: i===0 ? '#fff' : 'var(--fg-2)', border:'1px solid var(--border-subtle)' },
+      })),
+      catalogItems: [
+        {name:'Laptop request', desc:'Request a new or replacement laptop.', icon: icon('laptop',{size:18,color:'var(--blue-600)'})},
+        {name:'Software license', desc:'Request access to licensed software.', icon: icon('grid',{size:18,color:'var(--blue-600)'})},
+        {name:'VPN access', desc:'Enable remote network access.', icon: icon('database',{size:18,color:'var(--blue-600)'})},
+        {name:'Monitor', desc:'Request an additional display.', icon: icon('laptop',{size:18,color:'var(--blue-600)'})},
+        {name:'Desk booking', desc:'Reserve a desk at any office.', icon: icon('calendar',{size:18,color:'var(--blue-600)'})},
+        {name:'Password reset', desc:'Self-service credential reset.', icon: icon('settings',{size:18,color:'var(--blue-600)'})},
+      ],
+
+      incidentStats: [
+        {label:'P1 — Critical', value:'2', valueColor:'color:var(--text-danger);'},
+        {label:'P2 — High', value:'8', valueColor:'color:var(--text-warning);'},
+        {label:'P3 — Moderate', value:'21', valueColor:'color:var(--navy-900);'},
+        {label:'MTTR', value:'3.1h', valueColor:'color:var(--navy-900);'},
+      ],
+      incidents: [
+        {number:'INC0041207', desc:'Core application latency spike', severity:'P1', tone:'danger', state:'Investigating', group:'Platform Ops'},
+        {number:'INC0041201', desc:'Billing batch job failed to complete', severity:'P2', tone:'warning', state:'In Progress', group:'Billing Eng'},
+        {number:'INC0041195', desc:'VPN gateway intermittent drops', severity:'P2', tone:'warning', state:'In Progress', group:'Network'},
+        {number:'INC0041188', desc:'Report export timing out', severity:'P3', tone:'neutral', state:'Assigned', group:'App Support'},
+        {number:'INC0041179', desc:'Printer queue stuck — 4th floor', severity:'P3', tone:'neutral', state:'Assigned', group:'Desktop Support'},
+        {number:'INC0041160', desc:'SSO login errors for new hires', severity:'P2', tone:'warning', state:'Resolved', group:'IAM'},
+      ],
+
+      changeColumns: [
+        {title:'Requested', items:[
+          {number:'CHG0003311', title:'Upgrade CRM integration API', risk:'Low', tone:'success'},
+          {number:'CHG0003309', title:'Add read replica to reporting DB', risk:'Medium', tone:'warning'},
+        ]},
+        {title:'Scheduled', items:[
+          {number:'CHG0003298', title:'Firewall rule update — VPN subnet', risk:'Medium', tone:'warning'},
+        ]},
+        {title:'In Progress', items:[
+          {number:'CHG0003281', title:'Migrate ticketing DB to new cluster', risk:'High', tone:'danger'},
+          {number:'CHG0003277', title:'Rotate SSO signing certificate', risk:'Low', tone:'success'},
+        ]},
+        {title:'Completed', items:[
+          {number:'CHG0003260', title:'Patch load balancers — Aug cycle', risk:'Low', tone:'success'},
+        ]},
+      ],
+
+      assets: ASSETS.map((a,i) => ({ ...a, onClick: () => this.selectAsset(i),
+        rowStyle: { display:'grid', gridTemplateColumns:'120px 1fr 130px 140px 110px', padding:'14px 20px', borderTop:'1px solid var(--border-subtle)', alignItems:'center', fontSize:'13px', cursor:'pointer',
+          background: s.selectedAsset === i ? 'var(--blue-050)' : 'transparent' } })),
+      selectedAssetDetails: (() => { const a = ASSETS[s.selectedAsset]; return [
+        {label:'Serial number', value:a.serial}, {label:'Location', value:a.location}, {label:'Purchased', value:a.purchased}, {label:'Owner', value:a.owner}, {label:'Status', value:a.status},
+      ]; })(),
+
+      noApprovalsLeft: s.approvals.length === 0,
+      approvalsList: s.approvals.map(a => ({ ...a, onApprove: () => this.approveItem(a.id), onReject: () => this.approveItem(a.id) })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
